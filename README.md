@@ -2,7 +2,7 @@
 
 [![Version](https://img.shields.io/docker/v/fnndsc/pl-re-sub?sort=semver)](https://hub.docker.com/r/fnndsc/pl-re-sub)
 [![MIT License](https://img.shields.io/github/license/fnndsc/pl-re-sub)](https://github.com/FNNDSC/pl-re-sub/blob/master/LICENSE)
-[![Build](https://github.com/FNNDSC/pl-re-sub/actions/workflows/test.yml/badge.svg)](https://github.com/FNNDSC/pl-re-sub/actions)
+[![Build](https://github.com/FNNDSC/pl-re-sub/actions/workflows/ci.yml/badge.svg)](https://github.com/FNNDSC/pl-re-sub/actions)
 
 A _ChRIS ds_ plugin for find-and-replace operations on text files using regular expressions.
 
