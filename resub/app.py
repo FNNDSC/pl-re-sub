@@ -99,7 +99,7 @@ class Resub(ChrisApp):
 
         os.chdir(options.inputdir)
         input_files = [
-            fname in iglob(options.inputPathFilter, recursive=True)
+            fname for fname in iglob(options.inputPathFilter, recursive=True)
             if path.isfile(path.join(options.inputdir, fname))
         ]
 
