@@ -112,7 +112,7 @@ class Resub(ChrisApp):
             # those subdirectories in the output folder
             parentdir = path.dirname(fname)
             if parentdir:
-                os.makedirs(outputdir / parentdir), exist_ok=True)
+                os.makedirs(outputdir / parentdir, exist_ok=True)
 
             # execute regular expression substitution line-by-line
             with open(fname, 'r') as r:
