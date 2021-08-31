@@ -4,14 +4,19 @@
 [![MIT License](https://img.shields.io/github/license/fnndsc/pl-re-sub)](https://github.com/FNNDSC/pl-re-sub/blob/master/LICENSE)
 [![Build](https://github.com/FNNDSC/pl-re-sub/actions/workflows/test.yml/badge.svg)](https://github.com/FNNDSC/pl-re-sub/actions)
 
-Perform find-and-replace operations on text files using regular expressions.
+A _ChRIS ds_ plugin for find-and-replace operations on text files using regular expressions.
+
 
 ## Usage
 
 ```bash
 singularity exec docker://docker.io/fnndsc/pl-re-sub:latest resub \
-    --expression ... --replacement ... incoming/ outgoing/
+    --expression ... --replacement ... \
+    --inputPathFilder ... incoming/ outgoing/
 ```
+
+Files inside `incoming/` matching the glob given by `--inputPathFilder`
+are processed and written to `outgoing/`.
 
 #### `--expression`
 
