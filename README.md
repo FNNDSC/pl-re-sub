@@ -31,16 +31,20 @@ occurrences of what is matched by the value given to [`--expression`](#--express
 
 ### Examples
 
-Change dates from `MM/DD/YYYY` format to `YYYY.MM.DD` format:
+For every `*.csv` files in the directory `incoming/`,
+change dates from `MM/DD/YYYY` format to `YYYY.MM.DD` format,
+and saving the results into a new directory `outgoing/`:
 
 ```bash
+# set up date to be found in the incoming/ directory
 mkdir incoming/ outgoing/
 mv ./data.csv incoming/data.csv
 
+# convert date formats in all files and write results into outgoing/
 singularity exec docker://docker.io/fnndsc/pl-re-sub:latest resub \
     --expression '(\d\d)/(\d\d)/(\d\d\d\d)' \
     --replacement '\3.\1.\2' \
-    incoming/ outgoing/
+    --inputPathFilter '*.csv' incoming/ outgoing/
 ```
 
 ## Performance
