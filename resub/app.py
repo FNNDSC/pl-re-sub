@@ -93,17 +93,19 @@ class Resub(ChrisApp):
 
         regex = re.compile(options.expression)
 
+        # stay in the inputdir as working directory,
+        # wite to outputdir by absolute paths
+        outputdir = Path(options.outputdir).resolve()
+        os.chdir(options.inputdir)
+
         # not the perfect solution for collecting list of files
         # to process, but it's simple and resolves immediately
         # so tqdm can provide a progress bar.
 
-        os.chdir(options.inputdir)
         input_files = [
             fname for fname in iglob(options.inputPathFilter, recursive=True)
-            if path.isfile(path.join(options.inputdir, fname))
+            if path.isfile(fname)
         ]
-
-        outputdir = Path(options.outputdir)
 
         for fname in tqdm(input_files):
             output_fname = outputdir / fname
