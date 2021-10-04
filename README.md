@@ -12,7 +12,7 @@ A _ChRIS ds_ plugin for find-and-replace operations on text files using regular 
 ```bash
 singularity exec docker://docker.io/fnndsc/pl-re-sub:latest resub \
     --expression ... --replacement ... \
-    --inputPathFilder ... incoming/ outgoing/
+    --inputPathFilter ... incoming/ outgoing/
 ```
 
 Files inside `incoming/` matching the glob given by `--inputPathFilder`
@@ -28,6 +28,21 @@ Uses [Python `re`](https://docs.python.org/3/library/re.html) syntax.
 A string which may include matching groups which should be used to replace
 occurrences of what is matched by the value given to [`--expression`](#--expression).
 
+#### `--ifs`
+
+Multiple operations can be chained one after the other using the `--ifs` option.
+The value passed to `--ifs` (default `||`) is a delimiter between multiple regexes.
+
+For example, if you wanted to first replace all `B` with `A` and then do a second
+pass through the line replacing all `:(` with `:)`:
+
+```bash
+singularity exec docker://docker.io/fnndsc/pl-re-sub:latest resub \
+    --expression 'B :\(' --replacement 'A :\)' --ifs ' ' \
+    --inputPathFilter 'report_card.txt' incoming/ outgoing/
+```
+
+Chained operation support can be disabled by passing `--ifs ''`.
 
 ### Examples
 
@@ -54,3 +69,7 @@ When you have a large number of files, you can do parallel processing
 using external tools such as _ChRIS_, `sbatch`, or GNU `parallel`.
 
 Examples: TODO
+
+## (Un)Planned Features
+
+- [ ] `eval` support for dynamic replacement text generation

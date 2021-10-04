@@ -1,4 +1,4 @@
-chrisapp~=2.4.0
+chrisapp~=3.0.0rc2
 tqdm~=4.62.2
 
 # required for pypy v3.7

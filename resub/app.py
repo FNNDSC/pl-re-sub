@@ -10,6 +10,7 @@
 
 from chrisapp.base import ChrisApp
 import os
+import sys
 import re
 from os import path
 from pathlib import Path
@@ -70,7 +71,7 @@ class Resub(ChrisApp):
 
         self.add_argument(
             '-e', '--expression',
-            dest='expression',
+            dest='expr',
             help='regular expression to match, uses Python `re` syntax',
             optional=False,
             type=str
@@ -84,6 +85,15 @@ class Resub(ChrisApp):
             type=str
         )
 
+        self.add_argument(
+            '-s', '--ifs',
+            dest='ifs',
+            help='delimiter between chained regexes',
+            optional=True,
+            default='',
+            type=str
+        )
+
     def run(self, options):
         """
         Define the code to be run by this plugin app.
@@ -91,10 +101,20 @@ class Resub(ChrisApp):
         print(Gstr_title)
         print(f'Version: {self.get_version()}')
 
-        regex = re.compile(options.expression)
+        if options.ifs:
+            regexs = [re.compile(e) for e in options.expr.split(options.ifs)]
+            repls = options.repl.split(options.ifs)
+            if len(regexs) != len(repls):
+                print(f'Expression count mismatch using --ifs={options.ifs}')
+                print(f'Found {len(regexs)} matching expressions in `--expression={options.expr}`')
+                print(f'Found {len(repls)} replacement expressions in `--replacement={options.repl}`')
+                sys.exit(1)
+        else:
+            regexs = [re.compile(options.expr)]
+            repls = [options.repl]
 
         # stay in the inputdir as working directory,
-        # wite to outputdir by absolute paths
+        # write to outputdir by absolute paths
         outputdir = Path(options.outputdir).resolve()
         os.chdir(options.inputdir)
 
@@ -120,7 +140,9 @@ class Resub(ChrisApp):
             with open(fname, 'r') as r:
                 with output_fname.open('w') as w:
                     for line in r:
-                        w.write(regex.sub(options.repl, line))
+                        for regex, repl in zip(regexs, repls):
+                            line = regex.sub(repl, line)
+                        w.write(line)
 
     def show_man_page(self):
         self.print_help()
