@@ -6,7 +6,7 @@ with open(path.join(path.dirname(path.abspath(__file__)), 'README.md')) as f:
 
 setup(
     name             = 'resub',
-    version          = '1.1.0',
+    version          = '1.1.1',
     description      = 'Use regular expressions to perform find-and-replace.',
     long_description = readme,
     author           = 'FNNDSC',
